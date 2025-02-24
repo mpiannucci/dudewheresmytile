@@ -8,7 +8,6 @@ import TileResultInfo from './components/tile-result-info'
 import Footer from './components/footer'
 import TileCoordinateQueryForm from './components/tile-coordinate-query-form'
 import TileExistingQueryForm from './components/tile-existing-query-form'
-import { useEffect } from 'react'
 
 function TileApp() {
     const [searchParams, setSearchParams] = useSearchParams()

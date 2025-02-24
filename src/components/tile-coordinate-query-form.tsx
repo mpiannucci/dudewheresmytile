@@ -22,36 +22,69 @@ export default function TileCoordinateQueryForm({
     return (
         <form className="space-y-4 bg-white p-6 rounded-lg shadow-md">
             <div>
-                <label htmlFor="lat" className="block text-sm font-medium text-gray-700">
-                    Latitude
-                </label>
-                <input
-                    type="text"
+                <Label htmlFor="lat">Latitude</Label>
+                <Input
+                    type="number"
+                    step="any"
                     id="lat"
                     value={lat}
-                    onChange={(e) => setLat(e.target.value)}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500"
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        if (value === '' || value === '-') {
+                            setLat(value);
+                        } else {
+                            const num = parseFloat(value);
+                            if (!isNaN(num)) {
+                                setLat(value);
+                            }
+                        }
+                    }}
                     placeholder="Enter latitude (e.g. 51.5074)"
                 />
             </div>
             <div>
                 <Label htmlFor="longitude">Longitude</Label>
                 <Input
+                    type="number" 
+                    step="any"
                     id="longitude"
-                    type="text"
                     placeholder="Enter longitude (e.g. 71.343)"
                     value={lon}
-                    onChange={(e) => setLon(e.target.value)}
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        if (value === '' || value === '-') {
+                            setLon(value);
+                        } else {
+                            const num = parseFloat(value);
+                            if (!isNaN(num)) {
+                                setLon(value);
+                            }
+                        }
+                    }}
                 />
             </div>
             <div>
                 <Label htmlFor="zoom">Zoom Level</Label>
                 <Input
                     id="zoom"
-                    type="text"
-                    placeholder="Enter zoom level (0-24)"
+                    type="number"
+                    min="0"
+                    max="30"
+                    placeholder="Enter zoom level (0-30)"
                     value={zoom}
-                    onChange={(e) => setZoom(e.target.value)}
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        if (value === '') {
+                            setZoom(value);
+                        } else {
+                            const intValue = value.replace(/[^0-9-]/g, '');
+                            const num = parseInt(intValue);
+                            // Only allow if it's a valid integer (no decimal point)
+                            if (!isNaN(num) && num >= 0 && num <= 30) {
+                                setZoom(intValue);
+                            }
+                        }
+                    }}
                 />
             </div>
         </form>

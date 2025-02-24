@@ -19,39 +19,48 @@ export default function TileExistingQueryForm({
     setTileY,
     setTileZ,
 }: TileExistingQueryFormProps) {
+    const handleIntegerInput = (value: string, setter: (value: string) => void) => {
+        // Only allow integer values (no decimals)
+        const intValue = value.replace(/[^0-9-]/g, '');
+        setter(intValue);
+    };
+
     return (
         <form className="space-y-4 bg-white p-6 rounded-lg shadow-md">
             <div>
-                <label htmlFor="tileX" className="block text-sm font-medium text-gray-700">
-                    Tile X
-                </label>
-                <input
-                    type="text"
+                <Label htmlFor="tileX">Tile X</Label>
+                <Input
+                    type="number"
                     id="tileX"
                     value={tileX}
-                    onChange={(e) => setTileX(e.target.value)}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500"
+                    onChange={(e) => handleIntegerInput(e.target.value, setTileX)}
                     placeholder="Enter tile X coordinate (e.g. 3)"
+                    step="1"
+                    min="0"
                 />  
             </div>
             <div>
                 <Label htmlFor="tileY">Tile Y</Label>
                 <Input
                     id="tileY"
-                    type="text"
+                    type="number"
+                    step="1"
+                    min="0"
                     placeholder="Enter tile Y coordinate (e.g. 4)"
                     value={tileY}
-                    onChange={(e) => setTileY(e.target.value)}
+                    onChange={(e) => handleIntegerInput(e.target.value, setTileY)}
                 />
             </div>
             <div>
                 <Label htmlFor="tileZ">Tile Z (Zoom)</Label>
                 <Input
                     id="tileZ"
-                    type="text"
+                    type="number"
+                    step="1"
+                    min="0"
                     placeholder="Enter tile Z (zoom) (e.g. 15)"
                     value={tileZ}
-                    onChange={(e) => setTileZ(e.target.value)}
+                    onChange={(e) => handleIntegerInput(e.target.value, setTileZ)}
                 />
             </div>
         </form>

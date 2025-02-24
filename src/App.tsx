@@ -53,7 +53,6 @@ function TileApp() {
 
     // Determine which tab should be active based on URL parameters
     const activeTab = searchParams.get('tab') ?? (searchParams.get('x') ? 'tile' : 'coordinates')
-    console.log('activeTab', activeTab)
 
     const handleTabChange = (value: string) => {
         // Clear parameters and set tab

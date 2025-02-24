@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs'
 import { QueryResult, CoordinateQuery, TileQuery, tileQuery } from './lib/model'
 import { TileResultMap } from './components/tile-result-map'
 import TileResultInfo from './components/tile-result-info'
-import TileResultFooter from './components/tile-result-footer'
+import Footer from './components/footer'
 import TileCoordinateQueryForm from './components/tile-coordinate-query-form'
 import TileExistingQueryForm from './components/tile-existing-query-form'
 import { useEffect } from 'react'
@@ -126,9 +126,11 @@ function TileApp() {
                         <h2 className="text-2xl font-bold mb-4 text-blue-600">Sweet! Here's Your Info:</h2>
                         <TileResultInfo result={result} />
                         <TileResultMap className="h-96 w-full p-4" result={result} />
-                        <TileResultFooter />
                     </div>
                 )}
+            </div>
+            <div className="mt-8">
+              <Footer />
             </div>
         </main>
     )

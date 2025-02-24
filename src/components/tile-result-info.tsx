@@ -9,7 +9,7 @@ interface TileResultInfoProps {
 const TileLink = ({ tile }: { tile: Tile }) => {
     return (
         <a className="text-blue-600 hover:text-blue-700" href={`/?x=${tile.x}&y=${tile.y}&z=${tile.z}`}>
-            <span>[{[tile.x, tile.y, tile.z].join('/')}]</span>
+            <span>{[tile.x, tile.y, tile.z].join('/')}</span>
         </a>
     )
 }
@@ -43,21 +43,6 @@ export default function TileResultInfo({ result, className }: TileResultInfoProp
                     </div>
                 )}
             </div>
-            <div>
-                <h3 className="text-lg font-semibold">Bounding Box</h3>
-                <p>
-                    <span className="font-semibold">West:</span> {result.tile.bbox[0].toFixed(6)}
-                </p>
-                <p>
-                    <span className="font-semibold">South:</span> {result.tile.bbox[1].toFixed(6)}
-                </p>
-                <p>
-                    <span className="font-semibold">East:</span> {result.tile.bbox[2].toFixed(6)}
-                </p>
-                <p>
-                    <span className="font-semibold">North:</span> {result.tile.bbox[3].toFixed(6)}
-                </p>
-            </div>
             <div className="flex flex-col">
                 <h3 className="text-lg font-semibold">Tile Children</h3>
                 <ul>
@@ -67,6 +52,22 @@ export default function TileResultInfo({ result, className }: TileResultInfoProp
                         </li>
                     ))}
                 </ul>
+            </div>
+            <div>
+                <div>
+                    <h3 className="text-lg font-semibold">BBOX (EPSG:4326)</h3>
+                    <p>
+                        {result.tile.bbox[0].toFixed(6)}, {result.tile.bbox[1].toFixed(6)},{' '}
+                        {result.tile.bbox[2].toFixed(6)}, {result.tile.bbox[3].toFixed(6)}
+                    </p>
+                </div>
+                <div>
+                    <h3 className="text-lg font-semibold">BBOX (EPSG:3857)</h3>
+                    <p>
+                        {result.tile.mercatorBbox[0].toFixed(6)}, {result.tile.mercatorBbox[1].toFixed(6)},{' '}
+                        {result.tile.mercatorBbox[2].toFixed(6)}, {result.tile.mercatorBbox[3].toFixed(6)}
+                    </p>
+                </div>
             </div>
         </div>
     )

@@ -13,6 +13,14 @@ npm run dev
 
 ## Deployment
 
+Build
+
+```bash
+npm run build
+```
+
+The app is then available at `dist/*`. Use whatever platform you want to host the app.
+
 ## Notes
 
 Started from https://v0.dev/chat/fork-of-dude-wheres-my-tile-3uFZ8bU9upJ

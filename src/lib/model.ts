@@ -1,4 +1,4 @@
-import { getChildren, pointToTile, tileToBBOX } from 'tilebelt'
+import { getChildren, pointToTile, tileToBBOX, Tile as TilebeltTile } from '@mapbox/tilebelt'
 
 export interface Tile {
     x: number
@@ -36,7 +36,7 @@ export interface TileQuery {
 
 export type Query = CoordinateQuery | TileQuery
 
-function extractTileInfo(tile: number[]): {
+function extractTileInfo(tile: TilebeltTile): {
     tile: Tile
     children: Tile[]
 } {
@@ -85,7 +85,7 @@ export function tileQuery(query: Query): QueryResult {
             lon: query.lon,
         }
     } else {
-        const tile = [query.x, query.y, query.z]
+        const tile = [query.x, query.y, query.z] as TilebeltTile
         return {
             ...extractTileInfo(tile),
         }

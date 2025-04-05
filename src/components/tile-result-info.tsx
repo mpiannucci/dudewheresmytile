@@ -44,14 +44,22 @@ export default function TileResultInfo({ result, className }: TileResultInfoProp
                 )}
             </div>
             <div className="flex flex-col">
-                <h3 className="text-lg font-semibold">Tile Children</h3>
-                <ul>
-                    {result.children.map((child) => (
-                        <li key={child.x + child.y + child.z}>
-                            <TileLink tile={child} />
-                        </li>
-                    ))}
-                </ul>
+                <div>
+                    <h3 className="text-lg font-semibold">Parent Tile</h3>
+                    <p>
+                        <TileLink tile={result.parent} />
+                    </p>
+                </div>
+                <div>
+                    <h3 className="text-lg font-semibold">Children Tiles</h3>
+                    <ul>
+                        {result.children.map((child) => (
+                            <li key={child.x + child.y + child.z}>
+                                <TileLink tile={child} />
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
             <div>
                 <div>

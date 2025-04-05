@@ -1,4 +1,4 @@
-import { getChildren, pointToTile, tileToBBOX, Tile as TilebeltTile } from '@mapbox/tilebelt'
+import { getChildren, pointToTile, tileToBBOX, getParent, Tile as TilebeltTile } from '@mapbox/tilebelt'
 
 export interface Tile {
     x: number
@@ -13,11 +13,13 @@ export interface CoordinateQueryResult {
     lon: number
     tile: Tile
     children: Tile[]
+    parent: Tile
 }
 
 export type TileQueryResult = {
     tile: Tile
     children: Tile[]
+    parent: Tile
 }
 
 export type QueryResult = CoordinateQueryResult | TileQueryResult
@@ -39,6 +41,7 @@ export type Query = CoordinateQuery | TileQuery
 function extractTileInfo(tile: TilebeltTile): {
     tile: Tile
     children: Tile[]
+    parent: Tile
 } {
     const bbox = tileToBBOX(tile) as [number, number, number, number]
     const mercatorBbox = latlngBboxToMercator(bbox)
@@ -53,21 +56,23 @@ function extractTileInfo(tile: TilebeltTile): {
             mercatorBbox: mercatorBbox,
         }
     })
+    const parent = getParent(tile)
     return {
         tile: { x: tile[0], y: tile[1], z: tile[2], bbox: bbox, mercatorBbox: mercatorBbox },
         children: children,
+        parent: { x: parent[0], y: parent[1], z: parent[2], bbox: bbox, mercatorBbox: mercatorBbox },
     }
 }
 
 function lngLatToMeters(lng: number, lat: number): [number, number] {
-    const radius = 6378137; // Earth's radius in meters
-    const maxLatitude = 85.0511287798; // Limit latitude to avoid infinite values
+    const radius = 6378137 // Earth's radius in meters
+    const maxLatitude = 85.0511287798 // Limit latitude to avoid infinite values
 
-    let lat_ = Math.max(Math.min(lat, maxLatitude), -maxLatitude);
-    let x = radius * Math.PI * lng / 180;
-    let y = radius * Math.log(Math.tan((Math.PI / 4) + (lat_ * Math.PI / 360)));
+    let lat_ = Math.max(Math.min(lat, maxLatitude), -maxLatitude)
+    let x = (radius * Math.PI * lng) / 180
+    let y = radius * Math.log(Math.tan(Math.PI / 4 + (lat_ * Math.PI) / 360))
 
-    return [x, y];
+    return [x, y]
 }
 
 function latlngBboxToMercator(bbox: [number, number, number, number]): [number, number, number, number] {

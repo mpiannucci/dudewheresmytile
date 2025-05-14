@@ -19,6 +19,7 @@ export function Map({ initialCenter, initialZoom, mapStyle, mapRef, mapContainer
             style: mapStyle,
             center: initialCenter ?? [-74.5, 40],
             zoom: initialZoom ?? 2,
+            projection: 'mercator',
         })
 
         return () => {
